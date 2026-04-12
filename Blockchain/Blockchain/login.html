@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CharityChain</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Admin Hint Box */
+        .admin-hint-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(79, 70, 229, 0.08));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+        .admin-hint-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #00D4FF;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .admin-hint-header:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+        .admin-hint-toggle {
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+        .admin-hint-toggle.open {
+            transform: rotate(180deg);
+        }
+        .admin-hint-content {
+            display: none;
+            padding: 0 1rem 1rem;
+        }
+        .admin-hint-content.open {
+            display: block;
+        }
+        .admin-hint-note {
+            font-size: 0.78rem;
+            color: #A0A0A0;
+            margin-bottom: 0.6rem;
+        }
+        .admin-cred-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .admin-cred-row:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            background: rgba(0, 212, 255, 0.05);
+        }
+        .admin-cred-row:last-child {
+            margin-bottom: 0;
+        }
+        .cred-icon {
+            font-size: 1.2rem;
+        }
+        .admin-cred-row div {
+            flex: 1;
+        }
+        .admin-cred-row strong {
+            display: block;
+            font-size: 0.82rem;
+            color: #e0e0e0;
+        }
+        .admin-cred-row small {
+            font-size: 0.75rem;
+            color: #A0A0A0;
+        }
+        .cred-fill-btn {
+            font-size: 0.75rem;
+            color: #00D4FF;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Login success overlay */
+        .login-redirect-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 14, 23, 0.95);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .login-redirect-overlay.active {
+            display: flex;
+        }
+        .redirect-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0, 212, 255, 0.2);
+            border-top-color: #00D4FF;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .redirect-text {
+            text-align: center;
+        }
+        .redirect-text h3 {
+            color: #00D4FF;
+            font-size: 1.3rem;
+            margin-bottom: 0.4rem;
+        }
+        .redirect-text p {
+            color: #A0A0A0;
+            font-size: 0.9rem;
+        }
+        .redirect-badge {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            color: #00D4FF;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card login-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <span>⛓️</span>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Login to your CharityChain account</p>
+            </div>
+
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email ID</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Login to Dashboard</button>
+            </form>
+
+            <div class="auth-divider">
+                <span>or continue with</span>
+            </div>
+            <div class="social-login">
+                <button class="btn btn-social btn-google">
+                    <span>Google</span>
+                </button>
+                <button class="btn btn-social btn-facebook">
+                  <span>Facebook</span></button>
+            </div>
+
+          
+
+            <!-- Admin Quick Login Hint -->
+            <div class="admin-hint-box" id="adminHintBox">
+                <div class="admin-hint-header" onclick="toggleAdminHint()">
+                    <span>🔐 Admin Login Credentials</span>
+                    <span class="admin-hint-toggle" id="adminHintToggle">▼</span>
+                </div>
+                <div class="admin-hint-content" id="adminHintContent">
+                    <p class="admin-hint-note">Use these credentials to access the Admin Dashboard:</p>
+                    <div class="admin-cred-row" onclick="fillAdminCreds('admin@charitychain.com')">
+                        <span class="cred-icon">🛡️</span>
+                        <div>
+                            <strong>admin@charitychain.com</strong>
+                            
+                        </div>
+                        <span class="cred-fill-btn">Fill →</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="registration.html" class="auth-link">Sign up here</a></p>
+                <div class="back-container">
+                    <a href="index.html" class="btn btn-secondary btn-block back-btn" aria-label="Back to home of A Blockchain-Based Transparent Charity Donation Tracking System">← Back to Home</a>
+                    <small class="back-note">Home of "A Blockchain-Based Transparent Charity Donation Tracking System"</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-side">
+            <div class="side-content">
+                <h2>Your donations matter</h2>
+                <p>Track every donation with complete transparency powered by blockchain technology</p>
+                <div class="side-features">
+                    <div class="side-feature">
+                        <span>✓</span>
+                        <p>Secure & Transparent</p>
+                    </div>
+                    <div class="side-feature">
+                        <span>✓</span>
+                        <p>Real-Time Tracking</p>
+                    </div>
+                    <div class="side-feature">
+                        <span>✓</span>
+                        <p>Verified Charities</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleAdminHint() {
+            const content = document.getElementById('adminHintContent');
+            const toggle = document.getElementById('adminHintToggle');
+            content.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+
+        function fillAdminCreds(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            // Close the hint box
+            document.getElementById('adminHintContent').classList.remove('open');
+            document.getElementById('adminHintToggle').classList.remove('open');
+            // Visual feedback
+            document.getElementById('adminHintBox').style.borderColor = 'rgba(0, 212, 255, 0.6)';
+            setTimeout(() => {
+                document.getElementById('adminHintBox').style.borderColor = 'rgba(0, 212, 255, 0.3)';
+            }, 800);
+        }
+    </script>
+
+    <!-- Login Redirect Overlay -->
+    <div class="login-redirect-overlay" id="loginOverlay">
+        <div class="redirect-spinner"></div>
+        <div class="redirect-text">
+            <h3 id="overlayTitle">⛓️ Authenticating...</h3>
+            <p id="overlaySubtext">Verifying credentials</p>
+        </div>
+        <div class="redirect-badge" id="overlayBadge">🔐 Admin Access</div>
+    </div>
+</body>
+</html>
