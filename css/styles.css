@@ -665,7 +665,8 @@ body {
     padding: 2rem;
     background: var(--gradient-hero);
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .auth-body::before {
