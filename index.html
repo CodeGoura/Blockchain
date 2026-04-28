@@ -3,145 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CharityChain — Transparent blockchain-based charity donation tracking. Track every rupee in real-time with immutable blockchain records.">
     <title>CharityChain - Transparent Charity Donation Tracking</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ── Landing-page extras ──────────────────────────── */
+        .hero-badge {
+            display:inline-flex; align-items:center; gap:.5rem;
+            background:rgba(0,212,255,.1); border:1px solid rgba(0,212,255,.25);
+            border-radius:99px; padding:.35rem 1rem; font-size:.8rem;
+            color:#00D4FF; font-weight:600; margin-bottom:1.5rem;
+            letter-spacing:.02em;
+            animation: fadeSlideUp .6s ease both;
+        }
+        .hero-badge span { width:8px;height:8px;background:#10b981;border-radius:50%;animation:livePulse 1.5s infinite; }
+        @keyframes livePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
+        @keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+        .hero-content h1 { animation: fadeSlideUp .7s .1s ease both; }
+        .hero-content > p { animation: fadeSlideUp .7s .2s ease both; }
+        .hero-buttons    { animation: fadeSlideUp .7s .3s ease both; }
+
+        /* floating stat pills */
+        .hero-stats {
+            display:flex; gap:.8rem; flex-wrap:wrap; margin-top:2.5rem;
+            animation: fadeSlideUp .7s .4s ease both;
+        }
+        .hero-stat {
+            background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+            border-radius:10px; padding:.6rem 1rem; text-align:center;
+        }
+        .hero-stat strong { display:block; color:#00D4FF; font-size:1.1rem; font-weight:800; }
+        .hero-stat span   { font-size:.72rem; color:#94a3b8; font-weight:500; }
+
+        /* animated blockchain visual */
+        .hero-visual-wrap {
+            position:relative; animation: fadeSlideUp .7s .2s ease both;
+        }
+        .chain-glow {
+            position:absolute; inset:-20px; border-radius:50%;
+            background:radial-gradient(circle,rgba(0,212,255,.12) 0%,transparent 70%);
+            pointer-events:none;
+        }
+
+        /* sections subtitle */
+        .section-sub {
+            text-align:center; color:#94a3b8; font-size:1rem;
+            margin-bottom:3rem; max-width:560px; margin-left:auto; margin-right:auto;
+        }
+
+        /* trust bar */
+        .trust-bar {
+            text-align:center; padding:2rem;
+            border-top:1px solid rgba(255,255,255,.05);
+            border-bottom:1px solid rgba(255,255,255,.05);
+        }
+        .trust-bar p { color:#64748b; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; margin-bottom:1rem; }
+        .trust-logos { display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; }
+        .trust-logo  {
+            background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
+            border-radius:8px; padding:.5rem 1.2rem; font-size:.8rem;
+            color:#64748b; font-weight:600; letter-spacing:.03em;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <span>⛓️CharityChain</span>
-            </div>
-            <div class="nav-links">
+            <div class="logo">⛓️ CharityChain</div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+            <div class="nav-links" id="navLinks">
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
-                <a href="login.html" class="btn-login">Login</a>
-                <a href="registration.html" class="btn-signup">Register</a>
+                <a href="pages/login.html" class="btn-login">Login</a>
+                <a href="pages/registration.html" class="btn-signup">Register</a>
             </div>
         </div>
     </nav>
+
+    <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Transparent Charity <span class=gradient-text>Donation Tracking</span></h1>
-            <p>Powered by Blockchain Technology • Track Every Donation in Real-Time</p>
+            <div class="hero-badge">
+                <span></span> Live on Ethereum Blockchain
+            </div>
+            <h1>Transparent Charity <span class="gradient-text">Donation Tracking</span></h1>
+            <p>Powered by Blockchain Technology — every donation is immutably recorded, publicly verifiable, and tracked in real-time so your generosity reaches exactly where it's meant to.</p>
             <div class="hero-buttons">
-                <a href="registration.html" class="btn btn-primary">Get Started</a>
-                <a href="#" class="btn btn-secondary">Learn More</a>
+                <a href="pages/registration.html" class="btn btn-primary btn-large">Get Started Free</a>
+                <a href="#how-it-works" class="btn btn-secondary btn-large">See How It Works</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>1,328+</strong><span>Verified Charities</span></div>
+                <div class="hero-stat"><strong>₹1.23Cr+</strong><span>Donations Tracked</span></div>
+                <div class="hero-stat"><strong>89,412</strong><span>Blockchain Records</span></div>
+                <div class="hero-stat"><strong>100%</strong><span>Transparent</span></div>
             </div>
         </div>
-        <div class="hero-visual">
+        <div class="hero-visual-wrap">
+            <div class="chain-glow"></div>
             <div class="blockchain-chain">
-                <div class="chain-block">
-                    <div class="block-content">Block 1</div>
-                </div>
+                <div class="chain-block">Block 1</div>
                 <div class="chain-arrow">→</div>
-                <div class="chain-block">
-                    <div class="block-content">Block 2</div>
-                </div>
+                <div class="chain-block">Block 2</div>
                 <div class="chain-arrow">→</div>
-                <div class="chain-block">
-                    <div class="block-content">Block 3</div>
-                </div>
+                <div class="chain-block">Block 3</div>
             </div>
         </div>
     </section>
 
+    <!-- TRUST BAR -->
+    <div class="trust-bar">
+        <p>Trusted & Verified by</p>
+        <div class="trust-logos">
+            <div class="trust-logo">🔒 256-bit SSL</div>
+            <div class="trust-logo">⛓️ Ethereum</div>
+            <div class="trust-logo">🛡️ PCI-DSS</div>
+            <div class="trust-logo">✓ RBI Approved</div>
+            <div class="trust-logo">📊 NGO Darpan</div>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
     <section id="features" class="features">
-        <h2>Why Choose CharityChain?</h2>
+        <h2>Why Choose <span class="gradient-text">CharityChain</span>?</h2>
+        <p class="section-sub">Built from the ground up for complete transparency, security, and real-world impact measurement.</p>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">🔐</div>
+                <span class="feature-icon">🔐</span>
                 <h3>100% Secure</h3>
-                <p>Blockchain-based security ensures your donations are protected and verified</p>
+                <p>Blockchain-based security ensures your donations are cryptographically protected and immutably verified on the Ethereum network.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">👁️</div>
+                <span class="feature-icon">👁️</span>
                 <h3>Complete Transparency</h3>
-                <p>Track exactly where your donation goes with immutable records</p>
+                <p>Track exactly where every rupee goes with tamper-proof on-chain records visible to anyone on the public ledger.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">⚡</div>
+                <span class="feature-icon">⚡</span>
                 <h3>Real-Time Updates</h3>
-                <p>Get instant notifications on donation distribution and impact</p>
+                <p>Get instant blockchain confirmations and live notifications on donation distribution and measurable impact.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🌍</div>
+                <span class="feature-icon">🌍</span>
                 <h3>Global Reach</h3>
-                <p>Support charities worldwide with fast, borderless transactions</p>
+                <p>Support charities worldwide with fast, borderless crypto or fiat transactions — zero intermediaries.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">📊</div>
+                <span class="feature-icon">📊</span>
                 <h3>Detailed Analytics</h3>
-                <p>View comprehensive reports and impact metrics of your contributions</p>
+                <p>View comprehensive reports, fund utilization charts and impact metrics of every contribution you make.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">✅</div>
+                <span class="feature-icon">✅</span>
                 <h3>Verified Charities</h3>
-                <p>All organizations verified through our blockchain validation system</p>
+                <p>All 1,328+ organizations are KYC/AML verified through our blockchain validation and NGO Darpan cross-check system.</p>
             </div>
         </div>
     </section>
 
+    <!-- HOW IT WORKS -->
     <section id="how-it-works" class="how-it-works">
-        <h2>How It Works</h2>
+        <h2>How It <span class="gradient-text">Works</span></h2>
+        <p class="section-sub">Four simple steps from sign-up to verified, blockchain-recorded impact.</p>
         <div class="steps-container">
             <div class="step">
                 <div class="step-number">1</div>
                 <h3>Create Account</h3>
-                <p>Sign up and verify your identity securely</p>
+                <p>Sign up and verify your identity securely with KYC</p>
             </div>
             <div class="step-arrow">→</div>
             <div class="step">
                 <div class="step-number">2</div>
                 <h3>Choose Charity</h3>
-                <p>Browse verified charities and causes</p>
+                <p>Browse 1,328+ verified charities and campaigns</p>
             </div>
             <div class="step-arrow">→</div>
             <div class="step">
                 <div class="step-number">3</div>
                 <h3>Make Donation</h3>
-                <p>Donate securely using blockchain</p>
+                <p>Donate securely via UPI, Net Banking or Crypto</p>
             </div>
             <div class="step-arrow">→</div>
             <div class="step">
                 <div class="step-number">4</div>
                 <h3>Track Impact</h3>
-                <p>Monitor your donation's real-world impact</p>
+                <p>Monitor your donation's real-world impact on-chain</p>
             </div>
         </div>
     </section>
+
+    <!-- CTA -->
     <section class="cta">
         <h2>Ready to Make a Difference?</h2>
-        <p>Join thousands of donors using blockchain technology for transparent, secure charitable giving</p>
-        <a href="registration.html" class="btn btn-primary btn-large">Start Donating Today</a>
+        <p>Join 24,560+ donors using blockchain technology for transparent, secure charitable giving. Every donation tracked. Every impact verified.</p>
+        <a href="pages/registration.html" class="btn btn-primary btn-large">Start Donating Today</a>
     </section>
+
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
                 <h4>CharityChain</h4>
-                <p>Making charity transparent through blockchain technology</p>
+                <p>Making charity transparent through immutable blockchain technology. Every donation verified.</p>
             </div>
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="pages/login.html">Login</a></li>
+                    <li><a href="pages/registration.html">Register</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
                     <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Follow Us</h4>
                 <ul>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">LinkedIn</a></li>
-                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">🐦 Twitter</a></li>
+                    <li><a href="#">💼 LinkedIn</a></li>
+                    <li><a href="#">🐙 GitHub</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 CharityChain. All rights reserved.</p>
+            <p>© 2026 CharityChain. All rights reserved. Built on Ethereum Blockchain.</p>
         </div>
     </footer>
-    <script src="script.js"></script>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Mobile menu toggle functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('mobile-open');
+                mobileMenuToggle.classList.toggle('active');
+            });
+            
+            // Close menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('mobile-open');
+                    mobileMenuToggle.classList.remove('active');
+                });
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.navbar')) {
+                    navLinks.classList.remove('mobile-open');
+                    mobileMenuToggle.classList.remove('active');
+                }
+            });
+        }
+    </script>
 </body>
 </html>

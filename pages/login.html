@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CharityChain</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .admin-hint-box { background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(79,70,229,.08)); border:1px solid rgba(0,212,255,.3); border-radius:12px; margin-top:1.5rem; overflow:hidden; transition:border-color .3s; }
+        .admin-hint-header { display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem; cursor:pointer; font-size:.85rem; font-weight:600; color:#00D4FF; user-select:none; transition:background .2s; }
+        .admin-hint-header:hover { background:rgba(0,212,255,.05); }
+        .admin-hint-toggle { font-size:.7rem; transition:transform .3s; }
+        .admin-hint-toggle.open { transform:rotate(180deg); }
+        .admin-hint-content { display:none; padding:0 1rem 1rem; }
+        .admin-hint-content.open { display:block; }
+        .admin-hint-note { font-size:.78rem; color:#94a3b8; margin-bottom:.6rem; }
+        .admin-cred-row { display:flex; align-items:center; gap:.75rem; padding:.6rem .8rem; background:rgba(0,0,0,.2); border:1px solid rgba(0,212,255,.15); border-radius:8px; margin-bottom:.5rem; cursor:pointer; transition:all .2s; }
+        .admin-cred-row:hover { border-color:rgba(0,212,255,.5); background:rgba(0,212,255,.05); }
+        .admin-cred-row:last-child { margin-bottom:0; }
+        .cred-icon { font-size:1.2rem; }
+        .admin-cred-row div { flex:1; }
+        .admin-cred-row strong { display:block; font-size:.82rem; color:#e0e0e0; }
+        .admin-cred-row small { font-size:.75rem; color:#94a3b8; }
+        .cred-fill-btn { font-size:.75rem; color:#00D4FF; font-weight:600; white-space:nowrap; }
+        .login-redirect-overlay { display:none; position:fixed; inset:0; background:rgba(8,11,16,.96); z-index:99999; align-items:center; justify-content:center; flex-direction:column; gap:1.5rem; }
+        .login-redirect-overlay.active { display:flex; }
+        .redirect-spinner { width:56px; height:56px; border:3px solid rgba(0,212,255,.2); border-top-color:#00D4FF; border-radius:50%; animation:spin .8s linear infinite; }
+        @keyframes spin { to{transform:rotate(360deg);} }
+        .redirect-text { text-align:center; }
+        .redirect-text h3 { color:#00D4FF; font-size:1.3rem; margin-bottom:.4rem; font-family:'Inter',sans-serif; font-weight:700; }
+        .redirect-text p { color:#94a3b8; font-size:.9rem; font-family:'Inter',sans-serif; }
+        .redirect-badge { background:rgba(0,212,255,.1); border:1px solid rgba(0,212,255,.3); border-radius:20px; padding:.4rem 1rem; font-size:.8rem; color:#00D4FF; font-weight:600; font-family:'Inter',sans-serif; }
+    </style>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card login-card">
+            <div class="auth-header">
+                <div class="auth-logo"><span>⛓️</span></div>
+                <h1>Welcome Back</h1>
+                <p>Login to your CharityChain account</p>
+            </div>
+
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email ID</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login to Dashboard</button>
+            </form>
+
+            <div class="auth-divider"><span>or continue with</span></div>
+            <div class="social-login">
+                <button class="btn btn-social btn-google"><span>Google</span></button>
+                <button class="btn btn-social btn-facebook"><span>Facebook</span></button>
+            </div>
+
+            <!-- Admin Quick Login Hint -->
+            <div class="admin-hint-box" id="adminHintBox">
+                <div class="admin-hint-header" onclick="toggleAdminHint()">
+                    <span>🔐 Admin Login Credentials</span>
+                    <span class="admin-hint-toggle" id="adminHintToggle">▼</span>
+                </div>
+                <div class="admin-hint-content" id="adminHintContent">
+                    <p class="admin-hint-note">Use these credentials to access the Admin Dashboard:</p>
+                    <div class="admin-cred-row" onclick="fillAdminCreds('admin@charitychain.com')">
+                        <span class="cred-icon">🛡️</span>
+                        <div>
+                            <strong>admin@charitychain.com</strong>
+                            <small>Platform Administrator</small>
+                        </div>
+                        <span class="cred-fill-btn">Fill →</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="registration.html" class="auth-link">Sign up here</a></p>
+                <div class="back-container">
+                    <a href="../index.html" class="btn btn-secondary btn-block back-btn">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-side">
+            <div class="side-content">
+                <h2>Your donations matter</h2>
+                <p>Track every donation with complete transparency powered by immutable blockchain technology. Every rupee accounted for.</p>
+                <div class="side-features">
+                    <div class="side-feature"><span>✓</span><p>Secure &amp; Transparent</p></div>
+                    <div class="side-feature"><span>✓</span><p>Real-Time Blockchain Tracking</p></div>
+                    <div class="side-feature"><span>✓</span><p>Verified Charities Only</p></div>
+                    <div class="side-feature"><span>✓</span><p>KYC/AML Compliant</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Redirect Overlay -->
+    <div class="login-redirect-overlay" id="loginOverlay">
+        <div class="redirect-spinner"></div>
+        <div class="redirect-text">
+            <h3 id="overlayTitle">⛓️ Authenticating...</h3>
+            <p id="overlaySubtext">Verifying credentials</p>
+        </div>
+        <div class="redirect-badge" id="overlayBadge">🔐 Secure Login</div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        function toggleAdminHint() {
+            document.getElementById('adminHintContent').classList.toggle('open');
+            document.getElementById('adminHintToggle').classList.toggle('open');
+        }
+        function fillAdminCreds(email) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = 'Admin@2026';
+            document.getElementById('adminHintContent').classList.remove('open');
+            document.getElementById('adminHintToggle').classList.remove('open');
+            document.getElementById('adminHintBox').style.borderColor = 'rgba(0,212,255,.6)';
+            setTimeout(() => { document.getElementById('adminHintBox').style.borderColor = 'rgba(0,212,255,.3)'; }, 800);
+        }
+    </script>
+</body>
+</html>
